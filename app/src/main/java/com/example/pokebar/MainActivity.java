@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -63,13 +64,10 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
-    public void test(View view){
+    public void login(View view){
 
-        toast("Ici sera la page de login");
-    }
-
-    public void toast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(i);
 
     }
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "271809620120",
+    "firebase_url": "https://pokebar-d2874-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pokebar-d2874",
+    "storage_bucket": "pokebar-d2874.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271809620120:android:fc308cd9ed38d9205f48ed",
+        "android_client_info": {
+          "package_name": "com.example.pokebar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271809620120-tt1es9jongvkuc3crcq1rnbs9ra6aaho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVh_RR9BP0OwloZVQU0Ms5ZVgW6dKxMR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271809620120-tt1es9jongvkuc3crcq1rnbs9ra6aaho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
