@@ -2,6 +2,8 @@
     <string name="app_name">PokeBar</string>
     <string name="POTDTitle" tools:ignore="">"Today, the shiny pokemon is ..."</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Login page -->
     <string name="LTitle">Welcome back trainer !</string>
@@ -20,4 +22,7 @@
     <string name="RNameText">Name</string>
     <string name="REmailText">Email</string>
     <string name="RPwdText">Password</string>
+
+    <!-- PopUp message -->
+    <string name="PopTitle">What is the Pokemon of the day ?</string>
 </resources>

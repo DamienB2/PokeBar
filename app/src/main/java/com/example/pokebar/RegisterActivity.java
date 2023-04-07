@@ -72,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(RegisterActivity.this,"User is registered",Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                             }
                                             else{
                                                 Toast.makeText(RegisterActivity.this,"Failed to registered",Toast.LENGTH_SHORT).show();
