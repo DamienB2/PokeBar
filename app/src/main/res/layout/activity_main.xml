@@ -94,6 +94,22 @@
                 app:srcCompat="@drawable/pokebola_pokeball_png_0" />
 
         </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardViewScan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title2">
+
+            <LinearLayout
+                android:id="@+id/PokedexContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
