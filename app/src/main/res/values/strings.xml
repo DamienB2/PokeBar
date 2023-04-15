@@ -25,4 +25,21 @@
 
     <!-- PopUp message -->
     <string name="PopTitle">What is the Pokemon of the day ?</string>
+
+    <!-- Add Bar page -->
+    <string name="ABTitle">Add your Bar to the map !</string>
+    <string name="ABBarName">L\'Escale</string>
+    <string name="ABBarTtile">Bar name here</string>
+    <string name="ABDescriptionTitle">Small description here</string>
+    <string name="ABDescription">Small description talking about the bar</string>
+    <string name="ABStreetTitle">Street &amp; N° here</string>
+    <string name="ABStreet">Bd Roosevelt 26</string>
+    <string name="ABCityTitle">City name here</string>
+    <string name="ABCity">Soignies</string>
+    <string name="ABCountryTitle">Country here</string>
+    <string name="ABCountry">Belgium</string>
+
+    <!-- DownloadPokemon page -->
+    <string name="DPTitle">The Pokemon in your bar will be ...</string>
+    <string name="DPQrPersoDesc">Click on the ? to make your custom QrCode appear !</string>
 </resources>

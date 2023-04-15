@@ -30,7 +30,11 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         QrText = findViewById(R.id.Text_qrcode);
 
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         //for the moment, show all 150 pokemons
-        for (int i = 1; i <= 150; i++) {
+        /*for (int i = 1; i <= 150; i++) {
             RequestQueue queue = Volley.newRequestQueue(this);
 
             String url = "https://pokeapi.co/api/v2/pokemon/"+i;
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
 
-        }
+        }*/
     }
 
 
@@ -173,8 +178,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(imageRequest);
-
-
 
         pokedexLayout.addView(view);
     }
@@ -231,6 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(MainActivity.this,SettingsActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.nav_addBar:
+                Intent intent3 = new Intent(MainActivity.this,addBarActivity.class);
+                startActivity(intent3);
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -260,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(result.getContents() != null){
             Toast.makeText(this, "Vous avez capturé "+result.getContents()+" !", Toast.LENGTH_SHORT).show();
             QrText.setText("Vous avez rajouté "+result.getContents()+" à votre Pokédex !");
+
         }
     });
 

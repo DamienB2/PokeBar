@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addBarActivity">
+
+    <TextView
+        android:id="@+id/addBarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:fontFamily="@font/pokemon_solid"
+        android:text="@string/ABTitle"
+        android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextStreet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="@string/ABStreet"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextBarDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextBarDescription" />
+
+    <EditText
+        android:id="@+id/editTextTextCity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/ABCity"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTextCountry"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextStreet"
+        app:layout_constraintTop_toBottomOf="@+id/editTextStreet" />
+
+    <EditText
+        android:id="@+id/editTextTextCountry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ABCountry"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/addBarTitle"
+        app:layout_constraintTop_toTopOf="@+id/editTextTextCity" />
+
+    <TextView
+        android:id="@+id/StreetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/ABStreetTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextStreet"
+        app:layout_constraintStart_toStartOf="@+id/editTextStreet" />
+
+    <TextView
+        android:id="@+id/CityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/ABCityTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextCity"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextCity" />
+
+    <TextView
+        android:id="@+id/CountryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/ABCountryTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextCountry"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextCountry" />
+
+    <EditText
+        android:id="@+id/editTextTextBarName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="@string/ABBarName"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/addBarTitle"
+        app:layout_constraintTop_toBottomOf="@+id/addBarTitle" />
+
+    <TextView
+        android:id="@+id/BarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/ABBarTtile"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextBarName"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextBarName" />
+
+    <TextView
+        android:id="@+id/barTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="@string/ABDescriptionTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextBarDescription"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextBarDescription" />
+
+    <EditText
+        android:id="@+id/editTextTextBarDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/ABDescription"
+        android:inputType="textMultiLine"
+        android:maxLength="150"
+        android:maxLines="3"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextBarName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextBarName" />
+
+    <Button
+        android:id="@+id/btnAddBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Add my Bar !"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextCountry"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextCity"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextCity" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
