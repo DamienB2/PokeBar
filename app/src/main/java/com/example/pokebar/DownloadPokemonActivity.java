@@ -40,7 +40,7 @@ public class DownloadPokemonActivity extends AppCompatActivity {
 
     private TextView PokemonTitle;
     private ImageView imageView1, imageView2, imageView3;
-    private Button QrPersoBtn, QrCodeBtn;
+    private Button QrPersoBtn, QrCodeBtn, GoMapBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class DownloadPokemonActivity extends AppCompatActivity {
         imageView3 = findViewById(R.id.imageViewQrPokemonPerso);
         QrCodeBtn = findViewById(R.id.QrCodeBtn);
         QrPersoBtn = findViewById(R.id.QrPersoBtn);
+        GoMapBtn = findViewById(R.id.BtnGoMap);
 
 
         Intent intent = getIntent();
@@ -74,6 +75,13 @@ public class DownloadPokemonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DownloadImage(imageView3);
+            }
+        });
+
+        GoMapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DownloadPokemonActivity.this,MapsActivity.class));
             }
         });
 

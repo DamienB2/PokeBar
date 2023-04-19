@@ -1,5 +1,6 @@
 package com.example.pokebar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
@@ -13,6 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.pokebar.databinding.ActivityMapsBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -34,12 +40,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Bars");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String Name = String.valueOf(dataSnapshot.child("BarName").getValue());
+                    String Latitude = String.valueOf(dataSnapshot.child("Latitude").getValue());
+                    double Lat = Double.parseDouble(Latitude);
+                    String Longitude = String.valueOf(dataSnapshot.child("Longitude").getValue());
+                    double Long = Double.parseDouble(Longitude);
 
-        // Add a marker in Sydney and move the camera
-        LatLng bruxelles = new LatLng(50.850340, 4.351710);
-        mMap.addMarker(new MarkerOptions().position(bruxelles).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(bruxelles));
-        mMap.getMaxZoomLevel();
+                    mMap = googleMap;
+
+
+                    LatLng marker = new LatLng(Lat, Long);
+                    mMap.addMarker(new MarkerOptions().position(marker).title(Name));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
+                    mMap.getMaxZoomLevel();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

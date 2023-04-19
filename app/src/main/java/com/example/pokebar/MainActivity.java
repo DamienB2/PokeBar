@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,13 +30,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanIntentResult;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONArray;
@@ -49,11 +59,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     LinearLayout pokedexLayout;
 
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
 
 
         QrText = findViewById(R.id.Text_qrcode);
@@ -81,61 +99,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final String[] pokemonType = new String[1];
 
 
-        //for the moment, show all 150 pokemons
-        /*for (int i = 1; i <= 150; i++) {
-            RequestQueue queue = Volley.newRequestQueue(this);
+        //Problème avec la récupération des IDs
+        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("IDPokemon").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-            String url = "https://pokeapi.co/api/v2/pokemon/"+i;
+                    String ID = String.valueOf(dataSnapshot.child(String.valueOf(IDpokemon)).child("ID").getValue());
 
-            // Request a string response from the provided URL.
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
+
+                    RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+
+                    String url = "https://pokeapi.co/api/v2/pokemon/"+ID;
+
+
+                    // Request a string response from the provided URL.
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jObject = new JSONObject(response);
+
+                                        JSONArray types = jObject.getJSONArray("types");
+                                        JSONObject entry = types.getJSONObject(0);
+                                        JSONObject type = entry.getJSONObject("type");
+                                        String requestType = type.getString("name");
+                                        pokemonType[0] = requestType;
+
+
+                                        //get the pokemon name
+                                        String requestName = jObject.getString("name");
+                                        pokemonName[0] = requestName;
+
+
+                                        //get the pokemon image link
+                                        JSONObject PokemonSprites = jObject.getJSONObject("sprites");
+                                        JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
+                                        JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
+                                        String ImageUrl = SpritesOfficial.getString("front_default");
+
+
+                                        //get the pokemon id
+                                        String requestId = jObject.getString("id");
+
+                                        addPokemon(pokemonName,pokemonType, ImageUrl,requestId);
+
+
+                                    }catch(Exception e) {
+                                        System.out.println("Unable to get request result");
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
                         @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jObject = new JSONObject(response);
+                        public void onErrorResponse(VolleyError error) {
 
-                                JSONArray types = jObject.getJSONArray("types");
-                                JSONObject entry = types.getJSONObject(0);
-                                JSONObject type = entry.getJSONObject("type");
-                                String requestType = type.getString("name");
-                                pokemonType[0] = requestType;
-
-
-                                //get the pokemon name
-                                String requestName = jObject.getString("name");
-                                pokemonName[0] = requestName;
-
-
-                                //get the pokemon image link
-                                JSONObject PokemonSprites = jObject.getJSONObject("sprites");
-                                JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
-                                JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
-                                String ImageUrl = SpritesOfficial.getString("front_default");
-
-
-                                //get the pokemon id
-                                String requestId = jObject.getString("id");
-
-                                addPokemon(pokemonName,pokemonType, ImageUrl,requestId);
-
-
-                            }catch(Exception e) {
-                                System.out.println("Unable to get request result");
-                            }
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+
+                    });
+
+                    // Add the request to the RequestQueue.
+                    queue.add(stringRequest);
+
+
 
                 }
+            }
 
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            // Add the request to the RequestQueue.
-            queue.add(stringRequest);
-
-        }*/
+            }
+        });
     }
 
 
@@ -265,17 +301,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(),result -> {
         if(result.getContents() != null){
-            Toast.makeText(this, "Vous avez capturé "+result.getContents()+" !", Toast.LENGTH_SHORT).show();
-            QrText.setText("Vous avez rajouté "+result.getContents()+" à votre Pokédex !");
+
+            addPokemonToDB(result);
 
         }
     });
 
+    private void addPokemonToDB(ScanIntentResult result) {
 
-
-
-
-
-
-
+        IDPokemon ID = new IDPokemon(result.getContents());
+        FirebaseDatabase.getInstance().getReference("Users").child(userID).push().setValue(ID).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isComplete()){
+                    Toast.makeText(MainActivity.this, "The Pokemon has been added to your Pokedex", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
