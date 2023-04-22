@@ -20,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-
     private EditText editTxtName, editTxtMail, editTxtPwd;
     private Button registerButton;
 
@@ -54,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(name.isEmpty() || mail.isEmpty() || pwd.isEmpty()){
             registerButton.setError("");
             registerButton.requestFocus();
-            Toast.makeText(getApplicationContext(),"Some field are empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Some fields are empty",Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String userID;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,13 +100,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final String[] pokemonType = new String[1];
 
 
-        //Problème avec la récupération des IDs
         FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("IDPokemon").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                pokedexLayout.removeAllViews();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    String ID = String.valueOf(dataSnapshot.child(String.valueOf(IDpokemon)).child("ID").getValue());
+                    Log.d("POOP", String.valueOf(dataSnapshot));
+                    String ID = String.valueOf(dataSnapshot.getValue());
 
 
                     RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //adding each pokemon to the pokedex.
     private void addPokemon(String[] name, String[] type, String imageUrl, String id) {
+
         View view = getLayoutInflater().inflate(R.layout.pokemon_card, null);
 
         TextView pokemonNom = view.findViewById(R.id.textViewPokemonName);
@@ -309,8 +312,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void addPokemonToDB(ScanIntentResult result) {
 
-        IDPokemon ID = new IDPokemon(result.getContents());
-        FirebaseDatabase.getInstance().getReference("Users").child(userID).push().setValue(ID).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference("Users").child(userID).child("IDPokemon").child(result.getContents()).setValue(result.getContents()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isComplete()){
