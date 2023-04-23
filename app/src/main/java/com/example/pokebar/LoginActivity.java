@@ -17,12 +17,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText LoginMail, LoginPwd;
     private Button LoginBtn;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginMail = findViewById(R.id.LoginMail);
         LoginPwd = findViewById(R.id.LoginPwd);
 
-        LoginBtn = (Button) findViewById(R.id.BtnLogin);
+        LoginBtn = findViewById(R.id.BtnLogin);
 
         LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +82,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isComplete()){
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }else{
                     Toast.makeText(LoginActivity.this, "Failed to login!", Toast.LENGTH_SHORT).show();
                 }

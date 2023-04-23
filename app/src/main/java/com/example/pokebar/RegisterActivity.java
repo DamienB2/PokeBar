@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
         editTxtName = findViewById(R.id.RegisterName);
@@ -50,39 +49,38 @@ public class RegisterActivity extends AppCompatActivity {
         String mail = editTxtMail.getText().toString().trim();
         String pwd = editTxtPwd.getText().toString().trim();
 
-        if(name.isEmpty() || mail.isEmpty() || pwd.isEmpty()){
+        if (name.isEmpty() || mail.isEmpty() || pwd.isEmpty()) {
             registerButton.setError("");
             registerButton.requestFocus();
-            Toast.makeText(getApplicationContext(),"Some fields are empty",Toast.LENGTH_SHORT).show();
-            return;
-        }
+            Toast.makeText(getApplicationContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(mail, pwd)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isComplete()) {
+                                User user = new User(name, mail);
 
-        mAuth.createUserWithEmailAndPassword(mail,pwd)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isComplete()){
-                            User user = new User(name, mail);
-
-                            FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(RegisterActivity.this,"User is registered",Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(RegisterActivity.this, "User is registered", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                } else {
+                                                    Toast.makeText(RegisterActivity.this, "Failed to registered", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
-                                            else{
-                                                Toast.makeText(RegisterActivity.this,"Failed to registered",Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                        });
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
-    public void Login(View view){
+
+    public void Login(View view) {
         Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(i);
     }

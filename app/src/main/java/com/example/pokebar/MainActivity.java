@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 pokedexLayout.removeAllViews();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
-                    Log.d("POOP", String.valueOf(dataSnapshot));
                     String ID = String.valueOf(dataSnapshot.getValue());
 
 
