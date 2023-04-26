@@ -49,10 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
         String mail = editTxtMail.getText().toString().trim();
         String pwd = editTxtPwd.getText().toString().trim();
 
+
         if (name.isEmpty() || mail.isEmpty() || pwd.isEmpty()) {
             registerButton.setError("");
             registerButton.requestFocus();
             Toast.makeText(getApplicationContext(), "Some fields are empty", Toast.LENGTH_SHORT).show();
+        } else if (pwd.length() < 6){
+            editTxtPwd.setError("");
+            editTxtPwd.requestFocus();
+            Toast.makeText(getApplicationContext(), "Need more than 6 characters", Toast.LENGTH_SHORT).show();
         } else {
             mAuth.createUserWithEmailAndPassword(mail, pwd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
