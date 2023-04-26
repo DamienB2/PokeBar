@@ -63,14 +63,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/Title2" />
 
-        <TextView
-            android:id="@+id/Text_qrcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="error" />
-
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewScan"

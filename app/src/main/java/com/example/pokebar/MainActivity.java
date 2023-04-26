@@ -8,8 +8,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -51,6 +53,8 @@ import com.journeyapps.barcodescanner.ScanOptions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView QrText;
@@ -59,23 +63,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     LinearLayout pokedexLayout;
 
+    TextView POTDTextView;
+
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
 
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-
-        QrText = findViewById(R.id.Text_qrcode);
 
         //This part is for the navigation menu.
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -96,8 +102,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //this part is for the pokedex
         pokedexLayout = findViewById(R.id.PokedexContainer);
+
+        View vi = LayoutInflater.from(this).inflate(R.layout.mainpopup, null);
+        POTDTextView = vi.findViewById(R.id.POTDTextView);
+        String POTDText = (String) POTDTextView.getText();
+        POTDText = POTDText.toLowerCase();
+        String finalPOTDText = POTDText;
+
         final String[] pokemonName = new String[1];
         final String[] pokemonType = new String[1];
+
 
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("IDPokemon").addValueEventListener(new ValueEventListener() {
@@ -135,12 +149,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         pokemonName[0] = requestName;
 
 
-                                        //get the pokemon image link
-                                        JSONObject PokemonSprites = jObject.getJSONObject("sprites");
-                                        JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
-                                        JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
-                                        String ImageUrl = SpritesOfficial.getString("front_default");
+                                        String ImageUrl;
 
+                                        if(finalPOTDText.equals(requestName)){
+                                            //get the pokemon image link when the POTD is detected
+                                            JSONObject PokemonSprites = jObject.getJSONObject("sprites");
+                                            JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
+                                            JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
+                                            ImageUrl = SpritesOfficial.getString("front_shiny");
+
+                                            pokemonName[0] = requestName + "_Shiny";
+                                        }else{
+                                            //get the pokemon image link
+                                            JSONObject PokemonSprites = jObject.getJSONObject("sprites");
+                                            JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
+                                            JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
+                                            ImageUrl = SpritesOfficial.getString("front_default");
+                                        }
 
                                         //get the pokemon id
                                         String requestId = jObject.getString("id");
@@ -246,6 +271,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 popupWindow.dismiss();
             }
         });
+
+
+
+
     }
 
 

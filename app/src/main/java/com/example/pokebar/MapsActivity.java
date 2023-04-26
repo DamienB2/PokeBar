@@ -5,13 +5,21 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.pokebar.databinding.ActivityMapsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String Name = String.valueOf(dataSnapshot.child("BarName").getValue());
+                    String Desc = String.valueOf(dataSnapshot.child("BarDescription").getValue());
                     String Latitude = String.valueOf(dataSnapshot.child("Latitude").getValue());
                     double Lat = Double.parseDouble(Latitude);
                     String Longitude = String.valueOf(dataSnapshot.child("Longitude").getValue());
@@ -55,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                     LatLng marker = new LatLng(Lat, Long);
-                    mMap.addMarker(new MarkerOptions().position(marker).title(Name));
+                    mMap.addMarker(new MarkerOptions().position(marker).title(Name).snippet(Desc));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
                     mMap.getMaxZoomLevel();
                 }
@@ -66,5 +75,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+
+
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Toast.makeText(this,"onBackPressed",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
