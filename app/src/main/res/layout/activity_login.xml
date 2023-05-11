@@ -10,7 +10,7 @@
         android:id="@+id/LoginTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="125dp"
         android:fontFamily="@font/pokemon_solid"
         android:text="@string/LTitle"
         android:textAlignment="center"
@@ -20,17 +20,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/LoginMail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
-        android:ems="10"
-        android:hint="@string/LMailText"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="227dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LoginTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/BtnLogin"
+        app:srcCompat="@drawable/pikachu" />
+
+    <Button
+        android:id="@+id/BtnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="75dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/LLogin"
+        app:layout_constraintEnd_toEndOf="@+id/LoginPwd"
+        app:layout_constraintStart_toStartOf="@+id/LoginPwd"
+        app:layout_constraintTop_toBottomOf="@+id/LoginPwd" />
 
     <EditText
         android:id="@+id/LoginPwd"
@@ -40,26 +48,29 @@
         android:ems="10"
         android:hint="@string/LPwdText"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/LoginMail"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/LoginMail"
         app:layout_constraintTop_toBottomOf="@+id/LoginMail" />
 
-    <Button
-        android:id="@+id/BtnLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/LLogin"
-        app:layout_constraintEnd_toEndOf="@+id/LoginPwd"
-        app:layout_constraintStart_toStartOf="@+id/LoginPwd"
-        app:layout_constraintTop_toBottomOf="@+id/LoginPwd" />
+    <EditText
+        android:id="@+id/LoginMail"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="75dp"
+        android:ems="10"
+        android:hint="@string/LMailText"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/LoginTitle"
+        app:layout_constraintStart_toStartOf="@+id/LoginTitle"
+        app:layout_constraintTop_toBottomOf="@+id/LoginTitle" />
 
     <TextView
         android:id="@+id/RegisterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/NoAccount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RegisterTextClick" />
@@ -68,12 +79,13 @@
         android:id="@+id/RegisterTextClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:clickable="true"
         android:onClick="Register"
         android:text="@string/LRegister"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

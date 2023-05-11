@@ -82,6 +82,7 @@ public class DownloadPokemonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(DownloadPokemonActivity.this,MapsActivity.class));
+                finish();
             }
         });
 
@@ -105,10 +106,10 @@ public class DownloadPokemonActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
-            Toast.makeText(this, "Image téléchargée avec succès", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Image download successfully", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Erreur lors du téléchargement de l'image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to download image", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -232,12 +233,5 @@ public class DownloadPokemonActivity extends AppCompatActivity {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }

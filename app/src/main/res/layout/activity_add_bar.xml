@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".addBarActivity">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="415dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddBar"
+        app:srcCompat="@drawable/b89b2c45cfdc1695865e2efbe12d7554" />
+
     <TextView
         android:id="@+id/addBarTitle"
         android:layout_width="wrap_content"
@@ -130,6 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:backgroundTint="@color/red"
         android:text="Add my Bar !"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextCountry"
         app:layout_constraintStart_toStartOf="@+id/editTextTextCity"

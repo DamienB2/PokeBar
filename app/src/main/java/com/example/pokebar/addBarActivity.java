@@ -83,6 +83,7 @@ public class addBarActivity extends AppCompatActivity {
                                     Intent intent = new Intent(addBarActivity.this,DownloadPokemonActivity.class);
                                     intent.putExtra("ID",Integer.toString(Pokemon));
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(addBarActivity.this, "Failed to add your bar...", Toast.LENGTH_SHORT).show();
                                 }
@@ -91,11 +92,4 @@ public class addBarActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
 }
