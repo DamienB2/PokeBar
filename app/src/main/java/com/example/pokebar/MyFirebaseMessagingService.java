@@ -16,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -32,19 +35,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(remoteMessage.getFrom(), remoteMessage.getNotification().getBody());
+        // message, here is where that should be initiated. See sendNotification method below.-*-
         sendNotification(remoteMessage.getNotification().getBody());
+        changePokemonOfTheDay();
     }
 
-    private void sendNotification(String from, String body) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(MyFirebaseMessagingService.this, from + "->" + body, Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void changePokemonOfTheDay() {
+        int PotdID = (int) (Math.random()*151 +1);
+        FirebaseDatabase.getInstance().getReference("POTD").child("IDPOTD").setValue(PotdID);
     }
+
 
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);

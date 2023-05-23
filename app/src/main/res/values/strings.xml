@@ -24,8 +24,9 @@
     <string name="REmailText">Email</string>
     <string name="RPwdText">Password</string>
 
-    <!-- PopUp message -->
+    <!-- POTD message -->
     <string name="PopTitle">What is the Pokemon of the day ?</string>
+    <string name="POTDNale">It\'s</string>
 
     <!-- Add Bar page -->
     <string name="ABTitle">Add your Bar to the map !</string>

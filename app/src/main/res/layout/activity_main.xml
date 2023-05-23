@@ -96,6 +96,17 @@
             app:layout_constraintStart_toStartOf="@+id/cardViewScan"
             app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
+        <ImageView
+            android:id="@+id/ImageViewSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:onClick="switchClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_popup_sync" />
+
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -103,7 +114,7 @@
             app:layout_constraintBottom_toTopOf="@+id/InfoText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Title2">
+            app:layout_constraintTop_toBottomOf="@+id/PokedexTextView">
 
             <LinearLayout
                 android:id="@+id/PokedexContainer"
@@ -111,6 +122,18 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
         </ScrollView>
+
+        <TextView
+            android:id="@+id/PokedexTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pokemon_solid"
+            android:textAlignment="center"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

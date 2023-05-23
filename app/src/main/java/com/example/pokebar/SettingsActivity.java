@@ -58,6 +58,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                     userName.setText("Welcome "+Name);
                 }
+
+
             }
 
             @Override
