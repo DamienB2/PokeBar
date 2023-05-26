@@ -351,10 +351,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 break;
-            case R.id.nav_settings:
-                Intent intent2 = new Intent(MainActivity.this,SettingsActivity.class);
-                startActivity(intent2);
-                break;
             case R.id.nav_addBar:
                 Intent intent3 = new Intent(MainActivity.this,addBarActivity.class);
                 startActivity(intent3);
@@ -402,7 +398,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
+        System.out.println("Result :"+result.getContents());
+        System.out.println("ID :"+IDPOTD);
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOO :"+result.getContents().equals(IDPOTD));
         if(result.getContents().equals(IDPOTD)){
 
             FirebaseDatabase.getInstance().getReference("Users").child(userID).child("IDPokemonShiny").child(result.getContents()).setValue(result.getContents());

@@ -44,6 +44,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String pokemonName;
 
+    int cpt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,20 +68,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String Name = String.valueOf(dataSnapshot.child("BarName").getValue());
                     String Desc = String.valueOf(dataSnapshot.child("BarDescription").getValue());
-                    String PokemonID = String.valueOf(dataSnapshot.child("Pokemon").getValue());
                     String Latitude = String.valueOf(dataSnapshot.child("Latitude").getValue());
                     double Lat = Double.parseDouble(Latitude);
                     String Longitude = String.valueOf(dataSnapshot.child("Longitude").getValue());
                     double Long = Double.parseDouble(Longitude);
 
                     mMap = googleMap;
-
-
-                    //La demande est trop lente ce qui fait que pokemon name arrive null.
-                    getBarPokemon(PokemonID);
-                    System.out.println(pokemonName);
-                    Name = Name + " | " + pokemonName;
-
 
                     LatLng marker = new LatLng(Lat, Long);
                     mMap.addMarker(new MarkerOptions().position(marker).title(Name).snippet(Desc));
@@ -94,45 +88,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-    }
-
-
-    private void getBarPokemon(String pokemonID) {
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-
-        String url = "https://pokeapi.co/api/v2/pokemon/"+pokemonID;
-
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-
-                            JSONObject jObject = new JSONObject(response);
-
-                            //get the pokemon name
-                            String requestName = jObject.getString("name");
-                            System.out.println(pokemonName);
-                            pokemonName = requestName;
-
-                        }catch(Exception e) {
-                            System.out.println("Unable to get request result");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-        });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
     }
 }

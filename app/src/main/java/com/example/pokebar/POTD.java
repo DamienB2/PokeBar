@@ -75,7 +75,7 @@ public class POTD extends AppCompatActivity {
 
 
                 IDPOTD = String.valueOf(snapshot.getValue());
-                changeImageToPOTD();
+                requestImageLinkFromID();
             }
 
             @Override
@@ -85,7 +85,7 @@ public class POTD extends AppCompatActivity {
 
     }
 
-    private void changeImageToPOTD() {
+    private void requestImageLinkFromID() {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -103,7 +103,6 @@ public class POTD extends AppCompatActivity {
 
                             //get the pokemon name
                             String requestName = jObject.getString("name");
-                            requestName = requestName.toUpperCase();
                             POTDName.setText("It's " + requestName);
 
 
@@ -113,8 +112,6 @@ public class POTD extends AppCompatActivity {
                             JSONObject SpritesOther = PokemonSprites.getJSONObject("other");
                             JSONObject SpritesOfficial = SpritesOther.getJSONObject("official-artwork");
                             ImageUrl = SpritesOfficial.getString("front_default");
-
-                            System.out.println(ImageUrl);
 
                             linkToImage(ImageUrl);
 
