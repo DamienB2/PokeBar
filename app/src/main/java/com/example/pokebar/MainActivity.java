@@ -398,9 +398,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-        System.out.println("Result :"+result.getContents());
-        System.out.println("ID :"+IDPOTD);
-        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOO :"+result.getContents().equals(IDPOTD));
         if(result.getContents().equals(IDPOTD)){
 
             FirebaseDatabase.getInstance().getReference("Users").child(userID).child("IDPokemonShiny").child(result.getContents()).setValue(result.getContents());
